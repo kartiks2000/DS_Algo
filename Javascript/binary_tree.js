@@ -234,9 +234,20 @@ function sum_BFS_iterative(head){
 // console.log(sum_BFS_iterative(head))
 
 
+// A Valid BST
+
+//     10
+//    / \
+//   9   18
+//  /    / \
+// 7    15  20
+//          / \
+//         19  21
+//
+
 
 // var bst_head = new Node(10)
-// var bst_a = new Node(10)
+// var bst_a = new Node(9)
 // var bst_b = new Node(18)
 // var bst_c = new Node(7)
 // var bst_d = new Node(15)
@@ -268,6 +279,5 @@ function is_BST(node, min=Number.MIN_SAFE_INTEGER, max=Number.MAX_SAFE_INTEGER){
 }
 
 
-
-
 // console.log(is_BST(bst_head))
+
