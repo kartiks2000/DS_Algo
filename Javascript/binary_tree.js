@@ -113,3 +113,68 @@ function TreeBFS_iterative(head){
 
 // BFS Recursive
 // BFS does not have an efficient recursive approach, as BFS uses a Queue to empliment and using Recursion uses Stack under the hood which doesnt really align with the implimentation of BFS.
+
+
+
+
+
+// Searching an element using DFS Iterative
+// Time complexity: O(n) || Space complexity: O(n)
+
+function search_element_DFS_iterative(target, head){
+    if(head == null){
+        console.log("Empty Tree.")
+        return false
+    }
+    var stack = [head]
+
+    while(stack.length > 0){
+        var current_node = stack.pop()
+        if(current_node.val == target) {return true}
+        if(current_node.left != null) {stack.push(current_node.left)}
+        if(current_node.right != null) {stack.push(current_node.right)}
+    }
+    return false
+}
+
+// console.log(search_element_DFS_iterative(16, head))
+
+
+
+
+// Searching an element using DFS Recursive
+// Time complexity: O(n) || Space complexity: O(n)
+
+function search_element_DFS_recursive(target, head){
+    if (head == null) {return}
+    if (head.val == target) {return true}
+    var a = search_element_DFS_recursive(target, head.left)
+    var b = search_element_DFS_recursive(target, head.right)
+    return a || b
+}
+
+// console.log(search_element_DFS_recursive(17, head))
+
+
+
+
+// Searching an element using BFS Iterative
+// Time complexity: O(n) || Space complexity: O(n)
+
+function search_element_BFS_iterative(target, head){
+    if (head == null){
+        console.log("Empty Tree.")
+        return false
+    }
+    var queue = [head]
+
+    while(queue.length > 0){
+        var current_node = queue.shift()
+        if(current_node.val == target){return true}
+        if(current_node.left != null){queue.push(current_node.left)}
+        if(current_node.right != null){queue.push(current_node.right)}
+    }
+    return false
+}
+
+console.log(search_element_BFS_iterative(17, head))
