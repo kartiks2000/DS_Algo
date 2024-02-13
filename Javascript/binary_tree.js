@@ -177,4 +177,59 @@ function search_element_BFS_iterative(target, head){
     return false
 }
 
-console.log(search_element_BFS_iterative(17, head))
+// console.log(search_element_BFS_iterative(17, head))
+
+
+
+// Sum of all the nodes of Tree using DFS Iterative
+// Time complexity: O(n) || Space complexity: O(n)
+
+function sum_DFS_iterative(head){
+    if(head == null){return 0}
+    var stack = [head]
+    var sum = 0
+
+    while(stack.length > 0){
+        var current_node = stack.pop()
+        sum = sum + current_node.val
+        if(current_node.left != null) {stack.push(current_node.left)}
+        if(current_node.right != null) {stack.push(current_node.right)}
+    }
+    return sum
+}
+
+// console.log(sum_DFS_iterative(head))
+
+
+
+// Sum of all the nodes of Tree using DFS Recursive
+// Time complexity: O(n) || Space complexity: O(n)
+
+function sum_DFS_recursive(head){
+    if(head == null) {return 0}
+    return head.val + sum_DFS_recursive(head.left) + sum_DFS_recursive(head.right)
+}
+
+// console.log(sum_DFS_recursive(head))
+
+
+
+// Sum of all the nodes of Tree using BFS Iterative
+// Time complexity: O(n) || Space complexity: O(n)
+
+function sum_BFS_iterative(head){
+    if(head == null) {return 0}
+    var queue = [head]
+    var sum = 0
+
+    while(queue.length > 0){
+        var current_node = queue.shift()
+        sum = sum + current_node.val
+        if(current_node.left != null){queue.push(current_node.left)}
+        if(current_node.right != null){queue.push(current_node.right)}
+    }
+    return sum
+}
+
+// console.log(sum_BFS_iterative(head))
+
