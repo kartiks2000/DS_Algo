@@ -1,3 +1,7 @@
+// https://www.youtube.com/watch?v=fAAZixBzIAI&ab_channel=freeCodeCamp.org
+
+// https://www.youtube.com/playlist?list=PLNmW52ef0uwtUY4OFRF0eV1mlT5lKhe_j
+
 class Node {
     constructor(val=null, left=null, right=null){
         this.val = val? val : null
