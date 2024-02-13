@@ -26,27 +26,27 @@ class Node {
 
 // Declaring Nodes
 
-var head = new Node(5)
-// console.log("Head -> value", head.val)
-// console.log("Head -> left", head.left)
-// console.log("Head -> right", head.right)
+// var head = new Node(5)
+// // console.log("Head -> value", head.val)
+// // console.log("Head -> left", head.left)
+// // console.log("Head -> right", head.right)
 
-var a = new Node(7)
-var b = new Node(20)
-var c = new Node(16)
-var d = new Node(3)
-var e = new Node(4)
-var f = new Node(29)
+// var a = new Node(7)
+// var b = new Node(20)
+// var c = new Node(16)
+// var d = new Node(3)
+// var e = new Node(4)
+// var f = new Node(29)
 
 
-// Relations
+// // Relations
 
-head.left = a
-head.right = b
-a.left = c
-a.right = d
-d.left = f
-b.right = e
+// head.left = a
+// head.right = b
+// a.left = c
+// a.right = d
+// d.left = f
+// b.right = e
 
 
 // DFS Iterative
@@ -233,3 +233,42 @@ function sum_BFS_iterative(head){
 
 // console.log(sum_BFS_iterative(head))
 
+
+
+var bst_head = new Node(10)
+var bst_a = new Node(10)
+var bst_b = new Node(18)
+var bst_c = new Node(7)
+var bst_d = new Node(15)
+var bst_e = new Node(20)
+var bst_f = new Node(19)
+var bst_g = new Node(21)
+
+bst_head.left = bst_a
+bst_head.right = bst_b
+bst_a.left = bst_c
+bst_b.left = bst_d
+bst_b.right = bst_e
+bst_e.left = bst_f
+bst_e.right = bst_g
+
+
+
+
+// Checking if a Binary Tree is a BST (All the parent nodes should be greater or equal to left child and smaller than the right child, this should hold true for every possible subtrees of the tree)
+// Time complexity: O(n) || Space complexity: O(n)
+
+// Assumed definition of a valid BST: no parent is equal or smaller than its left children AND no parent is equal or greater than its right children.
+// We can also assume and make changes to code to accept the Tree whose parent can be equal or greater than its left child. Condition: (if(node.val>max || node.val<=min) { return false })
+
+function is_BST(node, min=Number.MIN_SAFE_INTEGER, max=Number.MAX_SAFE_INTEGER){
+    if(node==null){return true}
+    if(node.val>=max || node.val<=min) { return false }
+    return is_BST(node.left, min, node.val ) && is_BST(node.right, node.val, max)
+}
+
+
+
+
+console.log(is_BST(bst_head))
+// console.log("Number.MAX_SAFE_INTEGER , Number.MIN_SAFE_INTEGER", Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER)
