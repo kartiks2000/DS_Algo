@@ -352,3 +352,81 @@ function max_sum_root_to_leaf(head){
 }
 
 // console.log(max_sum_root_to_leaf(head))
+
+
+
+// Finding height of tree
+// Time complexity: O(n) || Space complexity: O(n)
+// Value of height and depth are same but the way we calculate them are different.
+// The depth of a node is the number of edges present in path from the root node of a tree to that node. The height of a node is the number of edges present in the longest path connecting that node to a leaf node.
+
+function find_height_of_tree(head){
+    if(head==null){ return 0 }
+    if(head.left==null && head.right==null){ return 1 }
+    var max_height = Math.max(find_height_of_tree(head.left), find_height_of_tree(head.right))
+    return max_height + 1
+}
+
+// console.log(find_height_of_tree(head))
+
+//     1
+//    / \
+//   2   3
+//  / \ / \
+// 4  5 6  7
+
+// Tree 1
+
+// var head1 = new Node(1)
+// var head1_a = new Node(2)
+// var head1_b = new Node(3)
+// var head1_c = new Node(4)
+// var head1_d = new Node(5)
+// var head1_e = new Node(6)
+// var head1_f = new Node(7)
+
+// head1.left = head1_a
+// head1.right = head1_b
+// head1_a.left = head1_c
+// head1_a.right = head1_d
+// head1_b.left = head1_e
+// head1_b.right = head1_f
+
+
+
+//     1
+//    / \
+//   2   3
+//  / \ / \
+// 4  5 6  7
+
+// Tree 2
+
+// var head2 = new Node(1)
+// var head2_a = new Node(2)
+// var head2_b = new Node(3)
+// var head2_c = new Node(4)
+// var head2_d = new Node(5)
+// var head2_e = new Node(6)
+// var head2_f = new Node(7)
+
+// head2.left = head2_a
+// head2.right = head2_b
+// head2_a.left = head2_c
+// head2_a.right = head2_d
+// head2_b.left = head2_e
+// head2_b.right = head2_f
+
+
+
+// Checking if two trees are identical
+
+function check_identical_trees(head1, head2){
+    if(head1==null && head2==null) { return true } // If both trees end together
+    if(head1==null || head2==null) { return false } // If any of the one tree end but the other does not
+    if(head1.val != head2.val) { return false }
+    var identical_bool = (check_identical_trees(head1.left, head2.left) && check_identical_trees(head1.right, head2.right))
+    return identical_bool
+}
+
+// console.log(check_identical_trees(head1, head2))
