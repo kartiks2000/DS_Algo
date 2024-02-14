@@ -285,3 +285,56 @@ function is_BST(node, min=Number.MIN_SAFE_INTEGER, max=Number.MAX_SAFE_INTEGER){
 
 // console.log(is_BST(bst_head))
 
+
+
+// Finding the minimum element of the Tree (any tree, not just BST) [Using DFS Iterative]
+// Time complexity: O(n) || Space complexity: O(n)
+
+function find_minumum_element_dfs_iterrative(head){
+    if(head == null){ return Infinity }
+    var stack = [ head ]
+    var minimum = Infinity
+
+    while(stack.length>0){
+        var current_node = stack.pop()
+        if(current_node.val<minimum){ minimum = current_node.val }
+        if(current_node.left != null){stack.push(current_node.left)}
+        if(current_node.right != null){stack.push(current_node.right)}
+    }
+    return minimum
+}
+
+// console.log(find_minumum_element_dfs_iterrative(head))
+
+
+// Finding the minimum element of the Tree (any tree, not just BST) [Using DFS Recursive]
+// Time complexity: O(n) || Space complexity: O(n)
+
+function find_minumum_element_recursive(head){
+    if(head == null){ return Infinity; }
+    var left_min = find_minumum_element_recursive(head.left)
+    var right_min = find_minumum_element_recursive(head.right)
+    return Math.min(head.val, left_min, right_min)
+}
+
+// console.log(find_minumum_element_recursive(head))
+
+
+// Finding the minimum element of the Tree (any tree, not just BST) [Using BFS Iterative]
+// Time complexity: O(n) || Space complexity: O(n)
+
+function find_minumum_element_bfs_iterrative(head){
+    if(head == null){ return Infinity }
+    var queue = [ head ]
+    var minimum = Infinity
+
+    while(queue.length>0){
+        var current_node = queue.shift()
+        if(current_node.val<minimum){ minimum = current_node.val }
+        if(current_node.left != null){queue.push(current_node.left)}
+        if(current_node.right != null){queue.push(current_node.right)}
+    }
+    return minimum
+}
+
+console.log(find_minumum_element_bfs_iterrative(head))
