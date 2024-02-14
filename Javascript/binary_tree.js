@@ -337,4 +337,18 @@ function find_minumum_element_bfs_iterrative(head){
     return minimum
 }
 
-console.log(find_minumum_element_bfs_iterrative(head))
+// console.log(find_minumum_element_bfs_iterrative(head))
+
+
+// Finding the largest sum of a path starting from root to a leaf node
+// Time complexity: O(n) || Space complexity: O(n)
+// https://youtu.be/fAAZixBzIAI?t=5657
+
+function max_sum_root_to_leaf(head){
+    if(head == null) { return -Infinity }
+    if(head.left == null && head.right == null){ return head.val }
+    var max_child_path_sum = Math.max(max_sum_root_to_leaf(head.left), max_sum_root_to_leaf(head.right))
+    return max_child_path_sum + head.val
+}
+
+// console.log(max_sum_root_to_leaf(head))
