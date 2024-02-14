@@ -238,7 +238,7 @@ function sum_BFS_iterative(head){
 // console.log(sum_BFS_iterative(head))
 
 
-// A Valid BST
+// ######## A Valid BST sample case ##########
 
 //     10
 //    / \
@@ -369,6 +369,10 @@ function find_height_of_tree(head){
 
 // console.log(find_height_of_tree(head))
 
+
+
+// ######## Identical Trees sample testcase #########
+
 //     1
 //    / \
 //   2   3
@@ -430,3 +434,73 @@ function check_identical_trees(head1, head2){
 }
 
 // console.log(check_identical_trees(head1, head2))
+
+
+
+
+// ######## Mirror Trees sample testcase #########
+
+//     1
+//    / \
+//   2   3
+//  / \ / \
+// 4  5 6  7
+
+// Tree 1
+
+var head1 = new Node(1)
+var head1_a = new Node(2)
+var head1_b = new Node(3)
+var head1_c = new Node(4)
+var head1_d = new Node(5)
+var head1_e = new Node(6)
+var head1_f = new Node(7)
+
+head1.left = head1_a
+head1.right = head1_b
+head1_a.left = head1_c
+head1_a.right = head1_d
+head1_b.left = head1_e
+head1_b.right = head1_f
+
+
+
+//     1
+//    / \
+//   3   2
+//  / \ / \
+// 7  6 5  4
+
+// Tree 2
+
+var head2 = new Node(1)
+var head2_a = new Node(2)
+var head2_b = new Node(3)
+var head2_c = new Node(4)
+var head2_d = new Node(5)
+var head2_e = new Node(6)
+var head2_f = new Node(7)
+
+head2.left = head2_b
+head2.right = head2_a
+head2_a.left = head2_d
+head2_a.right = head2_c
+head2_b.left = head2_f
+head2_b.right = head2_e
+
+
+
+// Checking if two trees are Mirror of each other
+// Its same as the finding identical question, only the order of comparing changes hence the recursive calls change (Now we compare tree1 left nodes to tree2 right nodes & tree1 right nodes to tree2 left nodes)
+
+function check_mirror_trees(head1, head2){
+    if(head1==null && head2==null) { return true } // If both trees end together
+    if(head1==null || head2==null) { return false } // If any of the one tree end but the other does not
+    if(head1.val != head2.val) { return false }
+    var mirror_bool = (check_mirror_trees(head1.left, head2.right) && check_mirror_trees(head1.right, head2.left))
+    return mirror_bool
+}
+
+// console.log(check_mirror_trees(head1, head2))
+
+
