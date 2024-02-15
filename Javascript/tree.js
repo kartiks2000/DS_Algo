@@ -559,7 +559,10 @@ function find_number_of_nodes(head){
 // console.log(find_number_of_nodes(head))
 
 
-// Diameter of tree passing through the parent node
+
+
+// Diameter of tree (passing through the parent node)
+// Time complexity: O(2n) => O(n) || Space complexity: O(2n) => O(n)
 
 function find_diameter_passing_root(tree_head){
     function tree_height(head){
@@ -576,3 +579,150 @@ function find_diameter_passing_root(tree_head){
 // console.log(find_diameter_passing_root(head))
 
 
+
+// ############# Sample for finding longest diameter ###########3
+
+    //         5
+    //        /
+    //       7
+    //      / \
+    //     16  3
+    //    /   /
+    //   30  29
+
+
+// Declaring Nodes
+
+// var head3 = new Node(5)
+
+
+// var head3_a = new Node(7)
+// var head3_c = new Node(16)
+// var head3_d = new Node(3)
+// var head3_e = new Node(4)
+// var head3_f = new Node(29)
+// var head3_g = new Node(30)
+
+
+// // Relations
+
+// head3.left = head3_a
+// head3_a.left = head3_c
+// head3_a.right = head3_d
+// head3_d.left = head3_f
+// head3_c.left = head3_g
+
+
+
+// ############ Sample 2 ###############
+
+
+
+//     10
+//    / \
+//   9   18
+//  /    / \
+// 7    15  20
+//          / \
+//         19  21
+//
+
+
+var head4 = new Node(10)
+var head4_a = new Node(9)
+var head4_b = new Node(18)
+var head4_c = new Node(7)
+var head4_d = new Node(15)
+var head4_e = new Node(20)
+var head4_f = new Node(19)
+var head4_g = new Node(21)
+
+head4.left = head4_a
+head4.right = head4_b
+head4_a.left = head4_c
+head4_b.left = head4_d
+head4_b.right = head4_e
+head4_e.left = head4_f
+head4_e.right = head4_g
+
+
+
+// ################## Sample 3 ######################
+
+
+//       10
+//      /  \
+//     9    18
+//    /    /  \
+//   7    15  20
+//       / \
+//      19 21
+
+
+var head5 = new Node(10)
+var head5_a = new Node(9)
+var head5_b = new Node(18)
+var head5_c = new Node(7)
+var head5_d = new Node(15)
+var head5_e = new Node(20)
+var head5_f = new Node(19)
+var head5_g = new Node(21)
+
+head5.left = head5_a
+head5.right = head5_b
+head5_a.left = head5_c
+head5_b.left = head5_d
+head5_b.right = head5_e
+head5_e.left = head5_f
+head5_e.right = head5_g
+
+
+
+// Diameter of tree (NOT necessarily passing through the parent node)
+// Time complexity: O(n^2) || Space complexity: O(n^2)
+
+// Its not a efficient sollution (Its Bruteforce), we are taking all the nodes once at a time and then calculating its left and right height and the selecting the node with maximum sum of heights.
+
+var max_height = -Infinity
+function find_diameter_of_tree(tree_head){
+    if(tree_head==null){ return 0 }
+    function tree_height(head){
+        if(head==null){ return 0 }
+        var height_max = Math.max(tree_height(head.left), tree_height(head.right))
+        return height_max + 1
+    }
+
+    max_height = Math.max(max_height, (tree_height(tree_head.left) + tree_height(tree_head.right)))
+
+    find_diameter_of_tree(tree_head.left)
+    find_diameter_of_tree(tree_head.right)
+
+    return max_height
+}
+
+// console.log(find_diameter_of_tree(head5))
+
+
+
+
+// Efficient way to calculate Diameter of tree (NOT necessarily passing through the parent node)
+// Time complexity: O(n) || Space complexity: O(n)
+
+// In this sollution instead of looping through all the nodes and then calculating the height of all the subtrees wrt each nodes, We just calculate the height of the tree (using the same function we did to calculate the height) But we just add a line which keeps a variable of max value of the sum of left_subtree_height and right_subtree_height. By this when the recurssive stack starts to iterate from bottom up, we keep updating the both left and right subtrees and at last we have the maximum value of the diameter in the tree.
+// https://youtu.be/Toe0UQMWhjM?t=422
+
+var max_diameter = 0
+function find_diameter_of_tree_efficent(tree_head){
+    var max_diameter = -Infinity;
+    function tree_height(node){
+        if(node==null){ return 0 }
+        var left_subtree_height = tree_height(node.left)
+        var right_subtree_height = tree_height(node.right)
+        max_diameter = Math.max(max_diameter, (left_subtree_height, right_subtree_height + 1)) // Extra line added to track the max value of (left_sub_tree_height + right_sub_tree_height so far)
+        return Math.max(left_subtree_height, right_subtree_height) + 1
+    }
+    tree_height(tree_head)
+    return max_diameter
+}
+
+// console.log(find_diameter_of_tree_efficent(head5))
