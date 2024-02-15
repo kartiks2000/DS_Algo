@@ -250,22 +250,22 @@ function sum_BFS_iterative(head){
 //
 
 
-// var bst_head = new Node(10)
-// var bst_a = new Node(9)
-// var bst_b = new Node(18)
-// var bst_c = new Node(7)
-// var bst_d = new Node(15)
-// var bst_e = new Node(20)
-// var bst_f = new Node(19)
-// var bst_g = new Node(21)
+var bst_head = new Node(10)
+var bst_a = new Node(9)
+var bst_b = new Node(18)
+var bst_c = new Node(7)
+var bst_d = new Node(15)
+var bst_e = new Node(20)
+var bst_f = new Node(19)
+var bst_g = new Node(21)
 
-// bst_head.left = bst_a
-// bst_head.right = bst_b
-// bst_a.left = bst_c
-// bst_b.left = bst_d
-// bst_b.right = bst_e
-// bst_e.left = bst_f
-// bst_e.right = bst_g
+bst_head.left = bst_a
+bst_head.right = bst_b
+bst_a.left = bst_c
+bst_b.left = bst_d
+bst_b.right = bst_e
+bst_e.left = bst_f
+bst_e.right = bst_g
 
 
 
@@ -726,3 +726,79 @@ function find_diameter_of_tree_efficent(tree_head){
 }
 
 // console.log(find_diameter_of_tree_efficent(head5))
+
+
+
+// Checking if a tree is balanced
+// Time complexity: O(n) || Space complexity: O(n)
+// Balanced tree -> A height balanced binary tree is a binary tree in which the height of the left subtree and right subtree of any node does not differ by more than 1 and both the left and right subtree are also height balanced.
+
+// Using the same optimization we used in the O(n) method for finding diameter of the tree. We calculate the height of the tree and in the meanwhile we also keep a track of every left_sub_tree and right_sub_tree height, if its <=1.
+
+function check_balanced_tree(tree_head){
+    var balanced_boolean = true
+    function tree_height(head){
+        if(!head){ return true }
+        var left_subtree_height = tree_height(head.left)
+        var right_subtree_height = tree_height(head.right)
+        var height_diff = Math.abs((left_subtree_height - right_subtree_height)) // Calculating diff in height for each node on its left and right.
+        balanced_boolean = balanced_boolean && (height_diff <= 1) // Keeping track of a boolean checking if a tree is balanced.
+        return Math.max(left_subtree_height, right_subtree_height) + 1
+    }
+    tree_height(tree_head)
+    return balanced_boolean
+}
+
+// console.log(check_balanced_tree(bst_head))
+
+
+
+// ################## Sample for checking child sum property ###################
+
+//     10
+//    / \
+//   6   4
+//  / \   \
+// 3   3   4
+
+
+// var head6 = new Node(10);
+// var head6_a = new Node(6);
+// var head6_b = new Node(4);
+// var head6_c = new Node(3);
+// var head6_d = new Node(3);
+// var head6_e = new Node(4);
+
+// Relations
+
+// head6.left = head6_a;
+// head6.right = head6_b;
+// head6_a.left = head6_c;
+// head6_a.right = head6_d;
+// head6_b.right = head6_e;
+
+
+
+
+// Children Sum Property in a Binary Tree (parent node value = right child value + left child value)
+// Time complexity: O(n) || Space complexity: O(n)
+// We used the same optimization using the height of tree concept.
+
+function check_children_sum(tree_head){
+    var children_sum_bool = true
+    function tree_height(node){
+        if(node==null || (node.left==null && node.right==null)){ return 0 } // The change in condition is to handle the leaves nodes to not check for their null children
+        var left_child_val = node.left != null? node.left.val : 0
+        var right_child_val = node.right != null? node.right.val : 0
+        if((left_child_val + right_child_val) == node.val){ console.log(node?.left?.val? node?.left?.val : 0, node?.right?.val? node?.right?.val : 0, node.val) } // Uncomment this line to print the values repecting the parent child sum property (It print zero for the null nodes)
+        if((left_child_val + right_child_val) != node.val){ children_sum_bool = children_sum_bool && false }
+        return Math.max(tree_height(node.left), tree_height(node.right)) + 1
+    }
+    tree_height(tree_head)
+    return children_sum_bool
+}
+
+// console.log(check_children_sum(head6))
+
+
+
