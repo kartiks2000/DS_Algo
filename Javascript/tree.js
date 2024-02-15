@@ -270,7 +270,7 @@ bst_e.right = bst_g
 
 
 
-// Checking if a Binary Tree is a BST (All the parent nodes should be greater or equal to left child and smaller than the right child, this should hold true for every possible subtrees of the tree)
+// Checking if a Tree is a BST (All the parent nodes should be greater or equal to left child and smaller than the right child, this should hold true for every possible subtrees of the tree)
 // Time complexity: O(n) || Space complexity: O(n)
 
 // Assumed definition of a valid BST: no parent is equal or smaller than its left children AND no parent is equal or greater than its right children.
