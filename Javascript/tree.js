@@ -362,7 +362,7 @@ function max_sum_root_to_leaf(head){
 
 function find_height_of_tree(head){
     if(head==null){ return 0 }
-    if(head.left==null && head.right==null){ return 1 }
+    if(head.left==null && head.right==null){ return 1 } // This line depends on whats the definition of Height of Tree (is it number of elements or edges)
     var max_height = Math.max(find_height_of_tree(head.left), find_height_of_tree(head.right))
     return max_height + 1
 }
@@ -557,5 +557,22 @@ function find_number_of_nodes(head){
 }
 
 // console.log(find_number_of_nodes(head))
+
+
+// Diameter of tree passing through the parent node
+
+function find_diameter_passing_root(tree_head){
+    function tree_height(head){
+        if(head==null){ return 0 }
+        var height_max = Math.max(tree_height(head.left), tree_height(head.right))
+        return height_max + 1
+    }
+    var tree_left_height = tree_height(tree_head.left)
+    var tree_right_height = tree_height(tree_head.right)
+    return tree_left_height + tree_right_height
+}
+
+
+// console.log(find_diameter_passing_root(head))
 
 
