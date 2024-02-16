@@ -2,6 +2,8 @@
 
 // https://www.youtube.com/playlist?list=PLNmW52ef0uwtUY4OFRF0eV1mlT5lKhe_j
 
+
+// NOTE: While array_to_BST problem,  you have a testcase which have 0 in it, and when we create a Node with value zero it takes it as null and assign null as the value (just a javascript thing). So we will create a new Node2 class and removing these guard rails there.
 class Node {
     constructor(val=null, left=null, right=null){
         this.val = val? val : null
@@ -80,7 +82,7 @@ function TreeDFS_iterative(head){
 
 function TreeDFS_recursive(head){
     if (head == null){
-        console.log("Exmpty tree.")
+        // console.log("Exmpty tree.")
         return []
     }
     var a = TreeDFS_recursive(head.left)
@@ -799,6 +801,46 @@ function check_children_sum(tree_head){
 }
 
 // console.log(check_children_sum(head6))
+
+
+
+
+// Sorted Array to BST
+// Note: a BST is balanced (|left height - right height| >= 1) and left child <= parent and right child > parent
+
+
+// Why we built a new class? (Read comment on Line 6)
+class Node2 {
+    constructor(val, left=null, right=null){
+        this.val = val
+        this.left = left
+        this.right = right
+    }
+}
+
+// Test case (sorted array to covert to a BST)
+var sorted_array = [-10,-3,0,5,9]
+
+function array_to_BST(sorted_array){
+    function binary_tree_creation(array,left, right){
+        if(left>right){ return null }
+        var mid = Math.floor((right + left) / 2)
+        var node = new Node2(array[mid])
+        node.left = binary_tree_creation(array, left, mid-1)
+        node.right = binary_tree_creation(array, mid+1, right)
+        return node
+    }
+    return binary_tree_creation(sorted_array, 0, sorted_array.length-1)
+}
+
+// NOTE: Apparently there could be multiple bst created for a given sorted array.
+
+// Returns the head node of the created BST
+// var array_tree_node = array_to_BST(sorted_array)
+
+// Doing DFS to print the created tree
+// var DFS_result = TreeDFS_recursive(array_tree_node)
+// console.log(DFS_result)
 
 
 
