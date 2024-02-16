@@ -25,3 +25,7 @@ const graph1 = {
     "f": []
 }
 
+
+// NOTE: Unlike tree, traversing a graph using any approach (DFS or BFS) doesnt garantee if all the nodes will be traversed (for directed graphs especially). Deciding the starting node to traverse also changes the order of transversal and the nodes traversed.
+
+
