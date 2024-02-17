@@ -100,6 +100,35 @@ function has_path(source, destination){
 // console.log(has_path('a', 'd'))
 
 
+// Emplimenting a better version of has_path iterative
+function has_path2_iterative(graph, source, destinantion){
+    if(source == destinantion){ return true }
+    var stack = [ source ]
+    while(stack.length>0){
+        var current_node = stack.pop()
+        if(current_node==destinantion){return true}
+        for(var i of graph[current_node]){
+            stack.push(i)
+        }
+    }
+    return false
+}
+
+// console.log(has_path2_iterative(graph1, 'b', 'd'))
+
+
+// Emplimenting a better version of has_path recursive
+function has_path2_recursive(graph, source, destinantion){
+    if(source == destinantion){ return true }
+    for(var i of graph[source]){
+        return (has_path2_recursive(graph1, i, destinantion) == true) // returns as soon as the destination is found
+    }
+    return false
+}
+
+// console.log(has_path2_recursive(graph1, 'e', 'd'))
+
+
 
 // Ways to calculate complexity of graphs.
 // There are two ways:
@@ -116,4 +145,11 @@ function has_path(source, destination){
 // n^2 = # of edges
 // So we can compute for the has_path as:
 // Time: O(n^2), Space: O(n)
+
+
+
+// NOTE: So far we have been assuming that the graphs are acyclic.
+
+// NOTE: So far all the problems we discussed and did were on the assumption that there were only one way directed graph that is if Node A can go to Node B then Node B can not go to Node A. But now we will be looking into undirected graphs (means there is no direction hence any node can go in any direction (bi-directional))
+
 
