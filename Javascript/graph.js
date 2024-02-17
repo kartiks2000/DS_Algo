@@ -84,3 +84,17 @@ function BFS_graph_iterative(graph,source_node){
 
 // NOTE: We dont impliment BFS for graph using recursion because recursion uses stack under the hood.
 
+
+// Path problem: We need to findout if path from Node A to Node B exists.
+// Sollution: We can find it using any traversal algorith like BFS or DFS in which we start from the starting Node and traverse and see if the destinantion node is traversed during thye traversal.
+
+function has_path(source, destination){
+    // calling the traversal function and checking if traversal from the source node covers the destination node.
+    var traversed_nodes = DFS_graph_iterative(graph1, source)
+    console.log(traversed_nodes)
+    if(traversed_nodes.includes(destination)){ return true }
+    return false
+}
+
+// console.log(has_path('a', 'd'))
+
