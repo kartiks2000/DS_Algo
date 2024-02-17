@@ -98,3 +98,21 @@ function has_path(source, destination){
 
 // console.log(has_path('a', 'd'))
 
+
+
+// Ways to calculate complexity of graphs.
+// There are two ways:
+
+// Way 1
+// n = # of nodes
+// e = # of edges
+// So we can compute for the has_path as:
+// Time: O(e), Space: O(n)
+
+
+// Way 2
+// n = # of nodes
+// n^2 = # of edges
+// So we can compute for the has_path as:
+// Time: O(n^2), Space: O(n)
+
