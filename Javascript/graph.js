@@ -90,6 +90,7 @@ function BFS_graph_iterative(graph,source_node){
 
 function has_path(source, destination){
     // calling the traversal function and checking if traversal from the source node covers the destination node.
+    // We can make it more efficient by custom writting the traversal code here and returning as soon as we get out destination during the transversal.
     var traversed_nodes = DFS_graph_iterative(graph1, source)
     console.log(traversed_nodes)
     if(traversed_nodes.includes(destination)){ return true }
