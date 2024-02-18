@@ -293,5 +293,42 @@ function components_of_graph_traversal(adjacency_list){
     return total_components
 }
 
-console.log(components_of_graph_traversal(graph3))
+// console.log(components_of_graph_traversal(graph3))
+
+
+
+var graph4 = {
+    '0': ['8', '1', '5'],
+    '1': ['0'],
+    '5': ['0', '8'],
+    '8': ['0', '5'],
+    '2': ['3', '4'],
+    '3': ['2', '4'],
+    '4': ['3', '2']
+}
+
+
+// Checking the Largest component of the graph
+// We need to return thr number of nodes in the largest component of the graph.
+function find_largest_component(adjacency_list){
+    var max = Number.MIN_SAFE_INTEGER
+    var visited_node = new Set()
+    var count = 0
+    function traverse_and_count(adjacency_list, source_node, visited_node){
+        if(visited_node.has(source_node)){ return 0 }
+        visited_node.add(source_node)
+        count = 1
+        for(neighbour of adjacency_list[source_node]){
+            count = count + traverse_and_count(adjacency_list, neighbour, visited_node)
+        }
+        return count
+    }
+    for(i in adjacency_list){
+        var current_component_count = traverse_and_count(adjacency_list, i, visited_node)
+        if(current_component_count>max){ max = current_component_count }
+    }
+    return max
+}
+
+// console.log(find_largest_component(graph4))
 
