@@ -206,3 +206,27 @@ function node_list_to_adjacency_list(node_list){
 //     o: [ 'n' ],
 //     n: [ 'o' ]
 // }
+
+// Draw the above graph on a paper to visualize and to be able to test and understand the below code.
+
+
+// NOTE: We always handle the case of cyclic graph unless stated that its acyclic.
+// We impliment the solution to avoid infinite loop in the cyclic graph using either a dictionary/object managing the nodes as keys and true as value if they are visited or byusing Set (effecient as it checks for an element and add an element in O(1))
+
+
+// Implimenting has_path function (this time considering it might have a cycle and cause infinite loop (For undirected/bidirectional graph))
+function has_path3_undirectional(adjacency_list, source_node, destination_node, visited_nodes = new Set()){
+    if(source_node==destination_node){ return true }
+    if(visited_nodes.has(source_node)){ return false } // Checking if node is already visited.
+    visited_nodes.add(source_node) // Adding the node to the visited nodes.
+    // Looping and reccursively calling all the neighnout of the source node and checking if they have direct path to the destination node.
+    for(i of adjacency_list[source_node]){
+        if(has_path3_undirectional(adjacency_list, i, destination_node, visited_nodes) == true){ return true } // Found!
+    }
+    return false
+}
+
+// Coverting edge_list to adjacency list
+// var adjacency_list_1 = node_list_to_adjacency_list(edge_list)
+// console.log(has_path3_undirectional(adjacency_list_1, 'm', 'i'))
+
