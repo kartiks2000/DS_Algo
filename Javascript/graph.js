@@ -1,3 +1,5 @@
+// https://www.youtube.com/watch?v=tWVWeAqZ0WU&ab_channel=freeCodeCamp.org
+
 // Graph is represented using Adjacency list (hashmap in C++/Java, a dictionary in python, object in javascript)
 // Consists of key value pairs, key being the nodes and value being the adjacent neighbours of that node where it can do (incase of directed graph).
 // To nodes A and B might be connected together such as they have a directed edge from node A to node B in this case A will have a neighbour B in the adjacency list (as we can go from A to B), but B will not have A as the neighbour (as there is no directed edge from B to A).
@@ -150,6 +152,57 @@ function has_path2_recursive(graph, source, destinantion){
 
 // NOTE: So far we have been assuming that the graphs are acyclic.
 
-// NOTE: So far all the problems we discussed and did were on the assumption that there were only one way directed graph that is if Node A can go to Node B then Node B can not go to Node A. But now we will be looking into undirected graphs (means there is no direction hence any node can go in any direction (bi-directional))
+// NOTE: So far all the problems we discussed and did were on the assumption that there were only one way directed graph that is if Node A can go to Node B then Node B can not go to Node A. But now we will be looking into undirected graphs (means there is no direction hence any node can go in any direction (A node can go to any of its neighbour)). Every edge is bi-directional.
+
+// Edge list of an undirected graph. Every pair in this list represents connection of the nodes.
+// Example [i, j] -> means i can travel to j and j can travel to i.
+var edge_list = [
+    ['i', 'j'],
+    ['k', 'i'],
+    ['m', 'k'],
+    ['k', 'l'],
+    ['o', 'n']
+]
+
+// We prefer converting an edge list into an adjacency list. (Traversal algorithms works best on adjacency list)
+// Creating a graph (adjacency list) for the above edge list.
+
+var graph2 = {
+    'i': ['j', 'k'],
+    'j': ['i'],
+    'k': ['i', 'm', 'l'],
+    'm': ['k'],
+    'l': ['k'],
+    'o': ['n'],
+    'n': ['o']
+}
+
+// When considering cyclic graphs (which have atleas 1 cycle in it), traversing them can result in infite loop. To avoid this we have to keep record of the already visited nodes.
+// A graph with only two nodes (for a undirected/bidirectional graph), it also behaves like a cyclic graph as going to A to B, then B to A and then again A to B and so on....
 
 
+// Code to convert a edge list to a adjacency list
+function node_list_to_adjacency_list(node_list){
+    var adjacency_list = {}
+    for(i of node_list){
+        var [a, b] = i  // Destructuring as we know every element will have a pair of edges
+        if(!(a in adjacency_list)){ adjacency_list[a] = [] }
+        if(!(b in adjacency_list)){ adjacency_list[b] = [] }
+        adjacency_list[a].push(b)
+        adjacency_list[b].push(a)
+    }
+    return adjacency_list
+}
+
+// console.log(node_list_to_adjacency_list(edge_list))
+
+// Output
+// {
+//     i: [ 'j', 'k' ],
+//     j: [ 'i' ],
+//     k: [ 'i', 'm', 'l' ],
+//     m: [ 'k' ],
+//     l: [ 'k' ],
+//     o: [ 'n' ],
+//     n: [ 'o' ]
+// }
