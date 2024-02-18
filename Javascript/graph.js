@@ -210,6 +210,29 @@ function node_list_to_adjacency_list(node_list){
 // Draw the above graph on a paper to visualize and to be able to test and understand the below code.
 
 
+
+// Creating DFS traversal handing the cyclic graphb case using visited node startery.
+function DFS_graph_iterative_cyclic(graph,source_node){
+    var visited_nodes = new Set()
+    var dfs_nodes = []
+    var stack = [ source_node ]
+    while(stack.length>0){
+        var current_node = stack.pop()
+        dfs_nodes.push(current_node)
+        visited_nodes.add(current_node)
+        for(i of graph[current_node]){
+            if(!(visited_nodes.has(i))){ stack.push(i) }
+        }
+    }
+    return dfs_nodes
+}
+
+// console.log(DFS_graph_iterative_cyclic(graph2, 'i'))
+
+
+// NOTE: a single graph can have multiple sepearte and de-atached sub graphs (like you will see in the above sample when you draw it). These each sepearted graphs are called components of the graph.
+
+
 // NOTE: We always handle the case of cyclic graph unless stated that its acyclic.
 // We impliment the solution to avoid infinite loop in the cyclic graph using either a dictionary/object managing the nodes as keys and true as value if they are visited or byusing Set (effecient as it checks for an element and add an element in O(1))
 
@@ -229,4 +252,46 @@ function has_path3_undirectional(adjacency_list, source_node, destination_node, 
 // Coverting edge_list to adjacency list
 // var adjacency_list_1 = node_list_to_adjacency_list(edge_list)
 // console.log(has_path3_undirectional(adjacency_list_1, 'm', 'i'))
+
+
+
+// NOTE: a single graph can have multiple sepearte and de-atached sub graphs (like you will see in the above sample when you draw it). These each sepearted graphs are called components of the graph.
+
+// Finding number of components in a graph
+// https://youtu.be/tWVWeAqZ0WU?t=3768
+// Stratergy: We select each node at a time and traverse all the possible nodes from there and also keep a track of all the visited nodes. Then we carry on with other nodes and traverse the connected nodes to it if they arent traversed earlier hence not in the visited nodes list. We also keep a count and every time we complete a traversal of nodes we did not traverse earlier, we increase the counter.
+
+
+var graph3 = {
+    'i': ['j', 'k'],
+    'j': ['i'],
+    'k': ['i', 'm', 'l'],
+    'm': ['k'],
+    'l': ['k'],
+    'o': ['n'],
+    'n': ['o'],
+    'p': []
+}
+
+
+function components_of_graph_traversal(adjacency_list){
+    var visited_node = new Set()
+    var total_components = 0
+    function count_components(adjacency_list, source_node){
+        if(visited_node.has(source_node)){ return false }
+        visited_node.add(source_node)
+        // We use depth first traversal (assuming this migh be cyclic we always handle cyclic traversal loop case)
+        var traversed_nodes = DFS_graph_iterative_cyclic(adjacency_list, source_node)
+        for(i of traversed_nodes){
+            visited_node.add(i)
+        }
+        return true
+    }
+    for(node in adjacency_list){
+        if(count_components(adjacency_list, node)){ total_components = total_components + 1 }
+    }
+    return total_components
+}
+
+console.log(components_of_graph_traversal(graph3))
 
