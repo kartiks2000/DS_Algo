@@ -395,11 +395,13 @@ var grid_graph = [
 // 'l' represents land and 'w' represents water.
 // We need to find the total islands
 
+// Time complexity: O(rc) || Space complexity: O(rc)
+
 function calc_island_count(graph){
     var visited_island_nodes = new Set()
     var island_count = 0
-    for(r=0; r<=graph.length; r=r+1){
-        for(c=0; c<=graph[0].length; c=c+1){
+    for(r=0; r<graph.length; r=r+1){
+        for(c=0; c<graph[0].length; c=c+1){
             if(explore_islands(graph, r, c, visited_island_nodes)){island_count += 1}
         }
     }
@@ -426,3 +428,41 @@ function explore_islands(graph, r, c, visited){
 
 
 // console.log(calc_island_count(grid_graph))
+
+
+
+// Minimun island size problem
+// https://youtu.be/tWVWeAqZ0WU?t=7132
+
+// We need to find the island with smallest size
+
+// Time complexity: O(rc) || Space complexity: O(rc)
+
+function smallest_island_size(graph){
+    var visited_island_nodes = new Set()
+    var min_size = Number.MAX_SAFE_INTEGER
+    for(r=0; r<graph.length; r=r+1){
+        for(c=0; c<graph[0].length; c=c+1){
+            var size = explore_island_size(graph, r, c, visited_island_nodes)
+            if(size<min_size && size!=0){ min_size = size } // We dont want an island with size 0
+        }
+    }
+    return min_size
+}
+
+function explore_island_size(graph, r, c, visited){
+    if(r<0 || r>=graph.length){ return 0 }
+    if(c<0 || c>=graph[0].length){ return 0 }
+
+    if(graph[r][c]=='w'){ return 0 }
+
+    var node_string = r + "," + c
+    if(visited.has(node_string)){ return 0 }
+
+    visited.add(node_string) // Adding as a string instead of array due to the behavior of JS
+
+    return 1 + explore_island_size(graph, r-1, c, visited) + explore_island_size(graph, r+1, c, visited) + explore_island_size(graph, r, c-1, visited) + explore_island_size(graph, r, c+1, visited)
+}
+
+
+// console.log(smallest_island_size(grid_graph))
