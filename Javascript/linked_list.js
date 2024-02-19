@@ -90,3 +90,29 @@ function val_at_index_recursive(head, index, current_index=0){
 }
 
 // console.log(val_at_index_recursive(head, 4))
+
+
+// Reversing a linkedlist
+function ll_reverse_iterative(head){
+    var prev = null
+    var current = head
+    while(current!=null){
+        var next = current.next
+        current.next = prev
+        prev = current
+        current = next
+    }
+    return prev
+}
+
+// console.log(traverse_ll_recursive(ll_reverse_iterative(head)))
+
+
+function ll_reverse_recursive(head, prev=null){
+    if(head==null){ return prev }
+    var next = head.next
+    head.next = prev
+   return ll_reverse_recursive(next, head)
+}
+
+// console.log(traverse_ll_recursive(ll_reverse_recursive(head)))
