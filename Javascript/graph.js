@@ -88,7 +88,7 @@ function BFS_graph_iterative(graph,source_node){
 
 
 // Path problem: We need to findout if path from Node A to Node B exists.
-// Sollution: We can find it using any traversal algorith like BFS or DFS in which we start from the starting Node and traverse and see if the destinantion node is traversed during thye traversal.
+// Sollution: We can find it using any traversal algorith like BFS or DFS in which we start from the starting Node and traverse and see if the destination node is traversed during thye traversal.
 
 function has_path(source, destination){
     // calling the traversal function and checking if traversal from the source node covers the destination node.
@@ -103,12 +103,12 @@ function has_path(source, destination){
 
 
 // Emplimenting a better version of has_path iterative
-function has_path2_iterative(graph, source, destinantion){
-    if(source == destinantion){ return true }
+function has_path2_iterative(graph, source, destination){
+    if(source == destination){ return true }
     var stack = [ source ]
     while(stack.length>0){
         var current_node = stack.pop()
-        if(current_node==destinantion){return true}
+        if(current_node==destination){return true}
         for(var i of graph[current_node]){
             stack.push(i)
         }
@@ -120,10 +120,10 @@ function has_path2_iterative(graph, source, destinantion){
 
 
 // Emplimenting a better version of has_path recursive
-function has_path2_recursive(graph, source, destinantion){
-    if(source == destinantion){ return true }
+function has_path2_recursive(graph, source, destination){
+    if(source == destination){ return true }
     for(var i of graph[source]){
-        return (has_path2_recursive(graph1, i, destinantion) == true) // returns as soon as the destination is found
+        return (has_path2_recursive(graph1, i, destination) == true) // returns as soon as the destination is found
     }
     return false
 }
@@ -332,3 +332,46 @@ function find_largest_component(adjacency_list){
 
 // console.log(find_largest_component(graph4))
 
+
+
+// Shortest path
+// https://youtu.be/tWVWeAqZ0WU?t=5043
+
+// There are 2 steps to finding shortest path between any 2 node:
+// 1. Traversing from source to the destination
+// 2. Counting distance between them.
+// Now, to traverse we have we have 2 ways BFS and DFS. But BFS is more efficient as it chooses a node and the explore all of its neighbours and then moove outwards. Whereas in DFS, it keeps going in one direction untill no nodes are found and then changes direction makes more like a spiral before fidning the destination element. BFS is more like expaning outwards like concentric circles or ripples.
+// To calculate the distance, we want to only traverse the graph once and hence we somehow need to keep track of the distance covered so far while traversng it. We do it by making a small change in the BFS algorithm and instead of just tracking and adding the node to the queue we add pair of the node aswell as the distance from the source so far.
+
+
+var edge_list3 = [
+    ['w', 'x'],
+    ['x', 'y'],
+    ['z', 'y'],
+    ['z', 'v'],
+    ['w', 'v']
+]
+
+var adjacency_list_3 = node_list_to_adjacency_list(edge_list3)
+// console.log(adjacency_list_3)
+
+function shortest_path(adjacency_list, source_node, destination_node){
+    var visited_nodes = new Set()
+    var queue = [[source_node, 0]]
+    visited_nodes.add(source_node)
+    while(queue.length>0){
+        var current_node = queue.shift()
+        console.log(current_node[0])
+        if(current_node[0] == destination_node){ return current_node[1] }
+        var current_distance = current_node[1]
+        for(neighbour of adjacency_list[current_node[0]]){
+            if(!(visited_nodes.has(neighbour))){
+                queue.push([neighbour, current_distance + 1])
+                visited_nodes.add(neighbour)
+            }
+        }
+    }
+    return -1 //return -1 if no path exist
+}
+
+// console.log(shortest_path(adjacency_list_3, 'w', 'v'))
