@@ -375,3 +375,54 @@ function shortest_path(adjacency_list, source_node, destination_node){
 }
 
 // console.log(shortest_path(adjacency_list_3, 'w', 'v'))
+
+
+
+// Count Island
+// https://youtu.be/tWVWeAqZ0WU?t=5976
+
+// In this problem we will be given a grid graph
+
+var grid_graph = [
+    ['w', 'l', 'w', 'w', 'w'],
+    ['w', 'l', 'w', 'w', 'w'],
+    ['w', 'w', 'w', 'l', 'w'],
+    ['w', 'w', 'l', 'l', 'w'],
+    ['l', 'w', 'w', 'l', 'l'],
+    ['l', 'l', 'w', 'w', 'w'],
+]
+
+// 'l' represents land and 'w' represents water.
+// We need to find the total islands
+
+function calc_island_count(graph){
+    var visited_island_nodes = new Set()
+    var island_count = 0
+    for(r=0; r<=graph.length; r=r+1){
+        for(c=0; c<=graph[0].length; c=c+1){
+            if(explore_islands(graph, r, c, visited_island_nodes)){island_count += 1}
+        }
+    }
+    return island_count
+}
+
+function explore_islands(graph, r, c, visited){
+    if(r<0 || r>=graph.length){ return false }
+    if(c<0 || c>=graph[0].length){ return false }
+
+    if(graph[r][c]=='w'){ return false }
+
+    var node_string = r + "," + c
+    if(visited.has(node_string)){ return false }
+
+    visited.add(node_string) // Adding as a string instead of array due to the behavior of JS
+
+    explore_islands(graph, r-1, c, visited)
+    explore_islands(graph, r+1, c, visited)
+    explore_islands(graph, r, c-1, visited)
+    explore_islands(graph, r, c+1, visited)
+    return true
+}
+
+
+// console.log(calc_island_count(grid_graph))
