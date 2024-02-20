@@ -139,7 +139,7 @@ var c2 = new Node(7);
 
 head2.next = a2;
 a2.next = b2;
-// b2.next = c2
+b2.next = c2
 
 // console.log(traverse_ll_recursive(head1))
 // console.log(traverse_ll_recursive(head2))
@@ -194,4 +194,4 @@ function zipping_ll_recursive(head1, head2){
     return head1
 }
 
-// console.log(traverse_ll_recursive(zipping_ll_recursive(head1, head2)))
+console.log(traverse_ll_recursive(zipping_ll_recursive(head1, head2)))
