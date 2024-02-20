@@ -54,3 +54,35 @@ function fibonacci_DP(n, memo={}){
 }
 
 // console.log(fibonacci_DP(10, memo={}))
+
+
+
+// Grid traveller problem
+
+// There is a robot on an m x n grid. The robot is initially located at the top-left corner (i.e., grid[0][0]). The robot tries to move to the bottom-right corner (i.e., grid[m - 1][n - 1]). The robot can only move either down or right at any point in time.
+// Given the two integers m and n, return the number of possible unique paths that the robot can take to reach the bottom-right corner.
+
+
+function grid_traveller_classic_recursion(m, n, current_row=0, current_col=0){
+    if(current_row>=m || current_col>=n){ return 0 }
+    if(current_row==m-1 && current_col==n-1){ return 1 }
+    return grid_traveller_classic_recursion(m, n, current_row + 1, current_col) + grid_traveller_classic_recursion(m, n, current_row, current_col + 1)
+}
+
+// console.log(grid_traveller_classic_recursion(2,3))
+
+// The above classic bruteforce is not efficient as there are redundent calculations of same path (make sure to draw recursive tree and watch the video).
+
+// We will be solving this problem using memoization and see how we can optimize it.
+// One more change here as compared to the bove sollution is: in above approach we were going from (0,0) to (m-1,n-1) But here we are going from (m,n) to (1,1). Nothing related to CP or memoization just implimented the apparoach on top of my head.
+
+function grid_traveller_DP(m, n, memo={}){
+    var memo_key = m + "," + n
+    if(memo_key in memo){ return memo[memo_key] }
+    if(m<=0 || n<=0){ return 0 }
+    if(m==1 && n==1){ return 1 }
+    memo[memo_key] = grid_traveller_DP(m-1, n, memo) + grid_traveller_DP(m, n-1, memo)
+    return memo[memo_key]
+}
+
+// console.log(grid_traveller_DP(10, 10))
