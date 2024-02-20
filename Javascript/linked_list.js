@@ -116,3 +116,82 @@ function ll_reverse_recursive(head, prev=null){
 }
 
 // console.log(traverse_ll_recursive(ll_reverse_recursive(head)))
+
+
+// Zipping 2 liked lists
+// LL1 = 1 -> 2 -> 3
+// LL2 = 4 -> 5 -> 6 -> 7
+// Resultant LL = 1 -> 4 -> 2 -> 5 -> 3 -> 6 -> 7
+
+var head1 = new Node(1);
+var a1 = new Node(2);
+var b1 = new Node(3);
+
+head1.next = a1;
+a1.next = b1;
+
+
+// Linked List 2
+var head2 = new Node(4);
+var a2 = new Node(5);
+var b2 = new Node(6);
+var c2 = new Node(7);
+
+head2.next = a2;
+a2.next = b2;
+// b2.next = c2
+
+// console.log(traverse_ll_recursive(head1))
+// console.log(traverse_ll_recursive(head2))
+
+function zipping_ll_iterative(head1, head2){
+    // Taking head of ll head1 as the head of the resultant ll
+    var result_head = head1
+    var result_tail = result_head
+    head1 = head1.next
+    while(head1!=null && head2!=null){ // We want to end loop as soon as one of the ll is finished and later attach the left over part of the longer ll to make it effiecient.
+        // Adding node from head2 ll
+        if(head2!=null){
+            result_tail.next = head2
+            result_tail = result_tail.next
+            head2 = head2.next
+        }
+        // Adding node from head1 ll
+        if(head1!=null){
+            result_tail.next = head1
+            result_tail= result_tail.next
+            head1 = head1.next
+        }
+    }
+
+
+    // We could have used the condition (head1!=null || head2!=null) in the loop, but to avoid the loop from unnecessary iterations we directly atatched the left over nodes of the larger ll if the other one has no nodes left.
+    if(head1!=null){
+        result_tail.next = head1
+    }
+
+    if(head2!=null){
+        result_tail.next = head2
+    }
+
+    return result_head
+}
+
+// console.log(traverse_ll_recursive(zipping_ll_iterative(head1, head2)))
+
+
+
+function zipping_ll_recursive(head1, head2){
+    if(head1==null && head2==null){ return null }
+    if(head1==null){ return head2 }
+    if(head2==null){ return head1 }
+
+    var next1 = head1.next
+    var next2 = head2.next
+    head1.next = head2
+
+    head2.next = zipping_ll_recursive(next1, next2)
+    return head1
+}
+
+// console.log(traverse_ll_recursive(zipping_ll_recursive(head1, head2)))
