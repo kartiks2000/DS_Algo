@@ -192,3 +192,65 @@ function how_sum_DP(target, numbers, memo={}){
 }
 
 // console.log(how_sum_DP(300, [7, 14]))
+
+
+
+// Best Sum problem
+
+// Write a function "howSum(targetSum, numbers) that takes in a targetSum and an array of numbers as arguments.
+// The function should return an array containing any combination of elements that add up to exactly the targetSum. If there is no combination that adds up to the targetSum, then return null.
+// If there are multiple combinations possible, you may return any single one.
+
+// Time: O(n^m * m) || Space: O(m*m)
+
+function best_sum_classic_recursive(target, numbers){
+    if(target==0){ return [] }
+    if(target<0){ return null }
+
+    var min_combination = null
+
+    for(let i of numbers){
+        var diff = target - i
+        var returned_result = best_sum_classic_recursive(diff, numbers)
+        if(returned_result!=null){
+            var combination = [...returned_result, i]
+            if(min_combination==null || combination.length < min_combination.length){
+                min_combination = combination
+            }
+        }
+
+    }
+    return min_combination
+}
+
+// console.log(best_sum_classic_recursive(7, [5, 3, 4, 7]))
+
+
+// Time: O(m * n * m) || Space: O(m*m)
+
+function best_sum_DP(target, numbers, memo={}){
+    if(target in memo){ return memo[target] }
+    if(target==0){ return [] }
+    if(target<0){ return null }
+
+    var min_combination = null
+
+    for(let i of numbers){
+        var diff = target - i
+        var returned_result = best_sum_DP(diff, numbers, memo)
+        if(returned_result!=null){
+            var combination = [...returned_result, i]
+            if(min_combination==null || combination.length < min_combination.length){
+                min_combination = combination
+                memo[target] = combination
+            }
+        }
+
+    }
+    return min_combination
+}
+
+// console.log(best_sum_DP(7, [5, 3, 4, 7]))
+console.log(best_sum_DP(100, [1, 2, 5, 25]))
+
+
