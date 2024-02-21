@@ -251,6 +251,119 @@ function best_sum_DP(target, numbers, memo={}){
 }
 
 // console.log(best_sum_DP(7, [5, 3, 4, 7]))
-console.log(best_sum_DP(100, [1, 2, 5, 25]))
+// console.log(best_sum_DP(100, [1, 2, 5, 25]))
 
+
+
+// CanConstruct Problem
+
+// Write a function 'canConstruct(target, wordBank)* that accepts a target string and an array of strings.
+// The function should return a boolean indicating whether or not the
+// "target can be constructed by concatenating elements of the wordBank array.
+// You may reuse elepents of "wordBank" as many times as needed.
+
+// m-> target string length & n-> strings array length
+// Time: O(n^m*m ) || Space: O(n^m)
+
+function can_construct_classic_recursion(target, strings){
+    if(target==""){ return true }
+
+    for(var i of strings){ // We can use splice function of JS to do check and remove the substring easily
+        // We can only remove the substring from start NOT in the middle as it will ruin the adjacency of the given string and the further steps will be invalid
+        if(target.indexOf(i)==0){
+            var new_target = target.replace(i, '')
+            if(can_construct_classic_recursion(new_target, strings)){ return true }
+        }
+    }
+    return false
+}
+
+// console.log(can_construct_classic_recursion('skateboard', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar']))
+// console.log(can_construct_classic_recursion('', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar']))
+// console.log(can_construct_classic_recursion('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd']))
+
+
+// m-> target string length & n-> strings array length
+// Time: O(n*(m^2)) || Space: O(m^2)
+
+function can_construct_DP(target, strings, memo={}){
+    if(target in memo){ return memo[target] }
+    if(target==""){ return true }
+
+    for(var i of strings){
+        if(target.indexOf(i)==0){
+            var new_target = target.replace(i, '')
+            var returned_value = can_construct_DP(new_target, strings, memo)
+            if(returned_value){
+                memo[target] = returned_value
+                return true
+            }
+        }
+    }
+    memo[target] = false
+    return false
+}
+
+// console.log(can_construct_DP('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd']))
+// console.log(can_construct_DP('skateboard', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar']))
+// console.log(can_construct_DP('', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar']))
+
+
+
+
+// Write a function 'countConstruct(target, wordBank) that accepts a target string, and an array of strings.
+// The function should return the number of ways that the 'target' can be constructed by concatenating elements of the 'wordBank" array.
+// You may reuse elements of "wordBank* as many times as needed.
+
+// m-> target string length & n-> strings array length
+// Time: O(n^m * m) || Space: O(m^2)
+
+function coubt_construct_classic_recursion(target, strings){
+    if(target==""){ return 1 }
+
+    var count = 0
+
+    for(var i of strings){
+        if(target.indexOf(i)==0){
+            var new_target = target.replace(i, '')
+            var returned_value = coubt_construct_classic_recursion(new_target, strings)
+            if(returned_value > 0){
+                count = count + returned_value
+            }
+        }
+    }
+    return count
+}
+
+// console.log(coubt_construct_classic_recursion('skateboard', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar']))
+// console.log(coubt_construct_classic_recursion('', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar']))
+// console.log(coubt_construct_classic_recursion('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd']))
+
+
+// m-> target string length & n-> strings array length
+// Time: O(n*(m^2)) || Space: O(m^2)
+
+function coubt_construct_DP(target, strings, memo={}){
+    if(target in memo){ return memo[target] }
+    if(target==""){ return 1 }
+
+    var count = 0
+
+    for(var i of strings){
+        if(target.indexOf(i)==0){
+            var new_target = target.replace(i, '')
+            var returned_value = coubt_construct_DP(new_target, strings)
+            if(returned_value > 0){
+                count = count + returned_value
+                memo[target] = count
+            }
+        }
+    }
+    memo[target] = count
+    return count
+}
+
+console.log(coubt_construct_DP('skateboard', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar']))
+console.log(coubt_construct_DP('', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar']))
+console.log(coubt_construct_DP('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd']))
 
