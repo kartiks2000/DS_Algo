@@ -71,10 +71,13 @@ function grid_traveller_classic_recursion(m, n, current_row=0, current_col=0){
 
 // console.log(grid_traveller_classic_recursion(2,3))
 
+// Time complexity: O(2^(m + n)) || Space complexity: O(m + n)
 // The above classic bruteforce is not efficient as there are redundent calculations of same path (make sure to draw recursive tree and watch the video).
 
 // We will be solving this problem using memoization and see how we can optimize it.
-// One more change here as compared to the bove sollution is: in above approach we were going from (0,0) to (m-1,n-1) But here we are going from (m,n) to (1,1). Nothing related to CP or memoization just implimented the apparoach on top of my head.
+// One more change here as compared to the bove sollution is: in above approach we were going from (0,0) to (m-1,n-1) But here we are going from (m,n) to (1,1). Nothing related to CP or memoization just implimented the apparoach on top of my head. We could do it bothways.
+
+// Time complexity: O(m * n) || Space complexity: O(m + n)
 
 function grid_traveller_DP(m, n, memo={}){
     var memo_key = m + "," + n
@@ -85,4 +88,61 @@ function grid_traveller_DP(m, n, memo={}){
     return memo[memo_key]
 }
 
-// console.log(grid_traveller_DP(10, 10))
+// console.log(grid_traveller_DP(18, 18))
+
+
+
+// ### Steps to Memoize a problem ###
+
+// STEP 1: Make it work
+//      -> vizualize the problem as a tree
+//      -> impliment the tree using recursion
+//      -> test it
+
+// STEP 2: Make it efficient (apply memoization(DP))
+//      -> add a memo object to the function parameter
+//      -> add a base case to return memo value
+//      -> store return value into the memo
+
+// NOTE: dont try to directly impliment DP (memoization), first write a working bruteforce recursive code and apply memoization changes to it.
+
+
+
+// CanSum problem
+
+// Write a function 'canSum(targetSum, numbers) that takes in a targetSum and an array of numbers as arguments.
+// The function should return a boolean indicating whether or not it is possible to generate the targetSum using numbers from the array.
+// You may use an element of the array as many times as needed.
+// You may assume that all input numbers are nonnegative.
+
+// Time complexity: O(n^m) || Space complexity: O(m)
+
+function can_sum_classic_recursion(target, numbers){
+    if(target==0){ return true }
+    if(target<0){ return false }
+    for(i of numbers){
+        if(can_sum_classic_recursion(target-i, numbers)==true){ return true }
+    }
+    return false
+}
+
+// console.log(can_sum_classic_recursion(8, [5, 3, 4, 7]))
+
+function can_sum_DP(target, numbers, memo={}){
+    if(target in memo){ return memo[target] }
+    if(target==0){ return true }
+    if(target<0){ return false }
+    for(i of numbers){
+        var returned_value = can_sum_DP(target-i, numbers, memo)==true
+        if(returned_value){
+            memo[target] = true
+            return true
+        }
+    }
+    memo[target] = false
+    return false
+}
+
+// console.log(can_sum_DP(8, [5, 3, 4, 7]))
+
+
