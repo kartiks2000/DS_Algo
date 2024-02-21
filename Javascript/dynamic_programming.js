@@ -115,6 +115,7 @@ function grid_traveller_DP(m, n, memo={}){
 // You may use an element of the array as many times as needed.
 // You may assume that all input numbers are nonnegative.
 
+// n-> length of array and m-> target
 // Time complexity: O(n^m) || Space complexity: O(m)
 
 function can_sum_classic_recursion(target, numbers){
@@ -146,3 +147,48 @@ function can_sum_DP(target, numbers, memo={}){
 // console.log(can_sum_DP(8, [5, 3, 4, 7]))
 
 
+
+
+// Write a function "howSum(targetSum, numbers) that takes in a targetSum and an array of numbers as arguments.
+// The function should return an array containing any combination of elements that add up to exactly the targetSum. If there is no combination that adds up to the targetSum, then return null.
+// If there are multiple combinations possible, you may return any single one.
+
+// n-> length of array and m-> target
+// Time: O(n^m * m) || Space: O(m)
+
+function how_sum_classic_recursion(target, numbers){
+    if(target===0){ return [] }
+    if(target<0){ return null }
+
+    for(var i of numbers){
+        var diff = target - i
+        var returned_val = how_sum_classic_recursion(diff, numbers)
+        if(returned_val!=null){
+            return [i, ...returned_val]
+        }
+    }
+    return null
+}
+
+// console.log(how_sum_classic_recursion(7, [5, 3, 4, 7]))
+
+
+// Time: O(n*m*m) || Space: O(m^2)
+function how_sum_DP(target, numbers, memo={}){
+    if(target in memo){ return memo[target] }
+    if(target===0){ return [] }
+    if(target<0){ return null }
+
+    for(var i of numbers){
+        var diff = target - i
+        var returned_val = how_sum_DP(diff, numbers, memo)
+        if(returned_val!=null){
+            memo[target] = [i, ...returned_val]
+            return memo[target]
+        }
+    }
+    memo[target] = null
+    return null
+}
+
+// console.log(how_sum_DP(300, [7, 14]))
