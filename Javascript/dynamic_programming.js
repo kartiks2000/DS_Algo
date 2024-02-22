@@ -7,6 +7,19 @@
 
 // Memoization -> is a technique used in dynamic programming to optimize recursive algorithms by storing the results of expensive function calls and returning the cached result when the same inputs occur again. It's essentially a top-down approach to dynamic programming.
 
+// Memoization is typically associated with a top-down approach in dynamic programming. In memoization, also known as "top-down" dynamic programming, the approach involves breaking down the problem into smaller subproblems and solving each subproblem only once. The solutions to subproblems are stored in a data structure, such as a dictionary or an array (the memoization table), to avoid redundant calculations.
+
+
+// Top-down and bottom-up are two approaches commonly used in dynamic programming to solve problems by breaking them down into smaller subproblems. In the top-down approach, also known as memoization, the problem is solved recursively by starting from the top (the original problem) and recursively solving smaller subproblems. To avoid redundant calculations, the solutions to subproblems are stored in a data structure (such as a dictionary or an array) called the memoization table. When a subproblem needs to be solved, the algorithm first checks if its solution is already present in the memoization table. If so, the stored solution is returned; otherwise, the subproblem is solved recursively. This approach is intuitive and easy to implement, but it may suffer from function call overhead due to recursion and may require additional space for the memoization table.
+
+// Tabulation is usually implimented using Recursive approach.
+
+
+
+// In contrast, the bottom-up approach builds the solution to the original problem by solving all subproblems iteratively, starting from the smallest subproblems and gradually building up to the original problem. Instead of relying on recursion, bottom-up dynamic programming fills up a table or array (often called a DP table) with solutions to subproblems in a systematic manner. By solving each subproblem only once and in a predetermined order, bottom-up dynamic programming eliminates the overhead of function calls and typically requires less memory compared to the top-down approach. While it may seem less intuitive at first, bottom-up dynamic programming is often preferred for its efficiency and scalability, especially when dealing with problems with a well-defined structure and optimal substructure property.
+
+// Tabulation is usually implimented using iterative approach (NOT Recursive).
+
 
 // Fibonacci Numbers
 
@@ -376,7 +389,7 @@ function count_construct_DP(target, strings, memo={}){
 // The function should return a 2D array containing all of the ways that the "target' can be constructed by concatenating elements of the wordBank" array. Each element of the 2D array should represent one combination that constructs the 'target".
 // You may reuse elements of "wordBank' as many times as needed.
 
-// Watch tutorial
+// Watch tutorial -> https://youtu.be/oBt53YbR9Kk?t=10053
 
 function all_construct_classic_recursion(target, strings){
     if(target==""){ return [[]] }
@@ -397,6 +410,10 @@ function all_construct_classic_recursion(target, strings){
 // console.log(all_construct_classic_recursion('purple', ['purp', 'p', 'ur', 'le', 'purpl']))
 // console.log(all_construct_classic_recursion('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd', 'ef', 'c']))
 
+
+
+// m-> target string length & n-> strings array length
+// Time: O(n^m)) || Space: O(m)
 
 function all_construct_DP(target, strings, memo={}){
     if(target in memo){ return memo[target] }
@@ -421,3 +438,74 @@ function all_construct_DP(target, strings, memo={}){
 
 
 
+
+// Dynamic Programming - Tabulation
+
+// Tabulation is a dynamic programming technique used to solve problems by building a table (often a multi-dimensional array) and filling it iteratively. In tabulation, the problem is solved bottom-up, starting with the base cases and progressively building up solutions for larger subproblems until the final solution is reached.
+// In tabulation, each cell in the table represents the solution to a subproblem, and the final solution is typically found in the last cell of the table. The table is filled in a systematic manner, often using nested loops, ensuring that all necessary subproblems are solved before moving on to larger ones.
+
+// Tabulation is usually implimented using iterative approach (NOT Recursive)
+
+
+
+// Fibonacci (using Tabular DP)
+// https://youtu.be/oBt53YbR9Kk?t=11459
+
+// Time: O(n) || Space: O(n)
+
+function fibonacci_iterative(n){
+    var a = 0
+    var b = 1
+    var i = n
+    var result = []
+    while(i>0){
+        if(i==n){ result.push(a) }
+        if(i==n-1){ result.push(b) }
+        else{
+            var c = a + b
+            a = b
+            b = c
+            result.push(c)
+        }
+        i -= 1
+    }
+    return result
+}
+
+// console.log(fibonacci_iterative(8))
+
+
+// Here we are considering 0 to be the 0th element of the fibonacci series
+
+
+// Time: O(n) || Space: O(n)
+
+// In the below code we are adding the previous 2 numbers to get the next one
+function fibonacci_DP_tabulation(n){
+    var result = Array(n+1).fill(0) // We need to take n+1 lenght array and intialize it with 0s
+    result[1] = 1
+    i = 2
+    while(i<=n){
+        result[i] = result[i-1] + result[i-2]
+        i += 1
+    }
+    return result
+}
+
+// console.log(fibonacci_DP_tabulation(8))
+
+
+// Time: O(n) || Space: O(n)
+
+// In the below code we will take a different approach and start adding each number to the next two numbers
+function fibonacci_DP_tabulation_2(n){
+    var result = Array(n+1).fill(0) // We need to take n+1 lenght array and intialize it with 0s
+    result[1] = 1
+    for(var i=1; i<=n; i+=1){
+        if((i+1)<=n) result[i+1] += result[i]
+        if((i+2)<=n) result[i+2] += result[i]
+    }
+    return result
+}
+
+// console.log(fibonacci_DP_tabulation_2(8))
