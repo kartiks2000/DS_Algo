@@ -475,14 +475,14 @@ function fibonacci_iterative(n){
 // console.log(fibonacci_iterative(8))
 
 
-// Here we are considering 0 to be the 0th element of the fibonacci series
+// Here we are considering 0 to be the 0th element of the fibonacci series. W
 
 
 // Time: O(n) || Space: O(n)
 
 // In the below code we are adding the previous 2 numbers to get the next one
 function fibonacci_DP_tabulation(n){
-    var result = Array(n+1).fill(0) // We need to take n+1 lenght array and intialize it with 0s
+    var result = Array(n+1).fill(0) // We need to take n+1 lenght array  so that we also have a nth index in our array and then intialize them all with 0s
     result[1] = 1
     i = 2
     while(i<=n){
@@ -499,7 +499,7 @@ function fibonacci_DP_tabulation(n){
 
 // In the below code we will take a different approach and start adding each number to the next two numbers
 function fibonacci_DP_tabulation_2(n){
-    var result = Array(n+1).fill(0) // We need to take n+1 lenght array and intialize it with 0s
+    var result = Array(n+1).fill(0) // We need to take n+1 lenght array  so that we also have a nth index in our array and then intialize them all with 0s
     result[1] = 1
     for(var i=1; i<=n; i+=1){
         if((i+1)<=n) result[i+1] += result[i]
@@ -509,3 +509,29 @@ function fibonacci_DP_tabulation_2(n){
 }
 
 // console.log(fibonacci_DP_tabulation_2(8))
+
+
+
+// Grid traveller Problem - Tabulation
+// Check the exact Grid traveller problem from above.
+// https://youtu.be/oBt53YbR9Kk?t=12138
+// Again we need to find the total number of ways for the traveller.
+
+// Time: O(m*n) || Space: O(m*n)
+
+function grid_traveller_DP_tabulation(m, n){
+    var result = Array(m+1).fill().map(() => Array(n+1).fill(0)) // We take 2D array of ((m+1) * (n+1)) size, because we also want nth and mth indexes included in our 2D array. So index would start from 0 to m for row and 0 to n for column.
+    result[1][1] = 1 // As we did earlier when we reach (0,0) we want to return 1 but because we are taking an extra index (size), hence we retun 1 from (1,1) instead of (0,0)
+    // Now we will loop through every element of the 2D array and add the number in the current cell to the cell on the next and the cell below it. (refer the Grid Traveller question)
+    for(var i=0; i<=m; i++){
+        for(var j=0; j<=n; j++){
+            // Adding to left cell
+            if((i+1) <= m) result[i+1][j] += result[i][j]
+            if((j+1) <= n) result[i][j+1] += result[i][j]
+        }
+    }
+    // Now to get the total numbers of the ways we need to return the result[m+1][n+1] index value
+    return result[m][n]
+}
+
+// console.log(grid_traveller_DP_tabulation(3, 3))
