@@ -310,6 +310,7 @@ function can_construct_DP(target, strings, memo={}){
 
 
 
+// Count construct problem
 
 // Write a function 'countConstruct(target, wordBank) that accepts a target string, and an array of strings.
 // The function should return the number of ways that the 'target' can be constructed by concatenating elements of the 'wordBank" array.
@@ -343,7 +344,7 @@ function coubt_construct_classic_recursion(target, strings){
 // m-> target string length & n-> strings array length
 // Time: O(n*(m^2)) || Space: O(m^2)
 
-function coubt_construct_DP(target, strings, memo={}){
+function count_construct_DP(target, strings, memo={}){
     if(target in memo){ return memo[target] }
     if(target==""){ return 1 }
 
@@ -352,7 +353,7 @@ function coubt_construct_DP(target, strings, memo={}){
     for(var i of strings){
         if(target.indexOf(i)==0){
             var new_target = target.replace(i, '')
-            var returned_value = coubt_construct_DP(new_target, strings)
+            var returned_value = count_construct_DP(new_target, strings)
             if(returned_value > 0){
                 count = count + returned_value
                 memo[target] = count
@@ -363,7 +364,60 @@ function coubt_construct_DP(target, strings, memo={}){
     return count
 }
 
-console.log(coubt_construct_DP('skateboard', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar']))
-console.log(coubt_construct_DP('', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar']))
-console.log(coubt_construct_DP('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd']))
+// console.log(count_construct_DP('skateboard', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar']))
+// console.log(count_construct_DP('', ['bo', 'rd', 'ate', 't', 'ska', 'sk', 'boar']))
+// console.log(count_construct_DP('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd']))
+
+
+
+// All construct problem
+
+// Write a function 'allConstruct(target, wordBank)™️ that accepts a target string and an array of strings.
+// The function should return a 2D array containing all of the ways that the "target' can be constructed by concatenating elements of the wordBank" array. Each element of the 2D array should represent one combination that constructs the 'target".
+// You may reuse elements of "wordBank' as many times as needed.
+
+// Watch tutorial
+
+function all_construct_classic_recursion(target, strings){
+    if(target==""){ return [[]] }
+
+    var result = []
+
+    for(var i of strings){ // make sure to always declare a variable using let or var else it can cause scope related erros and make your code hard to debug
+        if(target.indexOf(i)==0){
+            var new_target = target.replace(i, '')
+            var returned_value = all_construct_classic_recursion(new_target, strings) // This returning an array of arrays
+            var my_ways = returned_value.map(way => [i, ...way]) // This adds the current string infront of every sub-array
+            result.push(...my_ways)
+        }
+    }
+    return result
+}
+
+// console.log(all_construct_classic_recursion('purple', ['purp', 'p', 'ur', 'le', 'purpl']))
+// console.log(all_construct_classic_recursion('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd', 'ef', 'c']))
+
+
+function all_construct_DP(target, strings, memo={}){
+    if(target in memo){ return memo[target] }
+    if(target==""){ return [[]] }
+
+    var result = []
+
+    for(var i of strings){ // make sure to always declare a variable using let or var else it can cause scope related erros and make your code hard to debug
+        if(target.indexOf(i)==0){
+            var new_target = target.replace(i, '')
+            var returned_value = all_construct_DP(new_target, strings, memo) // This returning an array of arrays
+            var my_ways = returned_value.map(way => [i, ...way]) // This adds the current string infront of every sub-array
+            result.push(...my_ways)
+        }
+    }
+    memo[target] = result
+    return result
+}
+
+// console.log(all_construct_DP('purple', ['purp', 'p', 'ur', 'le', 'purpl']))
+// console.log(all_construct_DP('abcdef', ['ab', 'abc', 'cd', 'def', 'abcd', 'ef', 'c']))
+
+
 
