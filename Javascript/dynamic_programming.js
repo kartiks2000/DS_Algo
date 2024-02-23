@@ -581,7 +581,7 @@ function can_sum_DP_tabulation(target, numbers){
 // https://youtu.be/oBt53YbR9Kk?t=13983
 
 // m -> target, n -> length of array (numbers)
-// Time: O() || Space: O()
+// Time: O((m^2)*n) || Space: O(m*m)
 
 function how_sum(target, numbers){
     var result = Array(target+1).fill(null) // Initially considering there is no way to build the target.
