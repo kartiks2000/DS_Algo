@@ -572,4 +572,32 @@ function can_sum_DP_tabulation(target, numbers){
     return result[target]
 }
 
-console.log(can_sum_DP_tabulation(7, [5, 3, 4]))
+// console.log(can_sum_DP_tabulation(7, [5, 3, 4]))
+
+
+
+// How Sum - Tabulation DP
+// Watch the tutorial to understand
+// https://youtu.be/oBt53YbR9Kk?t=13983
+
+// m -> target, n -> length of array (numbers)
+// Time: O() || Space: O()
+
+function how_sum(target, numbers){
+    var result = Array(target+1).fill(null) // Initially considering there is no way to build the target.
+    result[0] = [] // Initializing seed value on 0th index as 0 can be generated using no element or empty array.
+
+    // Check video of understanding But we follow a relatively imilar algorithm but with different operations and approaches.
+    for(var i=0; i<=target; i++){
+        if(result[i]!=null){
+            for(var j=0; j<numbers.length; j++){
+                if(i+numbers[j]<=target){
+                    result[i+numbers[j]] = [...result[i], numbers[j]]
+                }
+            }
+        }
+    }
+    return result[target]
+}
+
+// console.log(how_sum(7, [5, 3, 4]))
