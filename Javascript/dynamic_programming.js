@@ -535,3 +535,36 @@ function grid_traveller_DP_tabulation(m, n){
 }
 
 // console.log(grid_traveller_DP_tabulation(3, 3))
+
+
+
+
+// ### Steps to Tabulate a problem ###
+// • visualize the problem as a table
+// • size the table based on the inputs
+// • initialize the table with default values
+// • seed the trivial answer into the table
+// • iterate through the table
+// • fill further positions based on the current position
+
+
+
+// Can Sum problem - Tabulation DP
+// Watch the tutorial to understand
+// https://youtu.be/oBt53YbR9Kk?t=13079
+
+function can_sum_DP_tabulation(target, numbers){
+    var result = Array(target+1).fill(false) // To apply tabulation to this problem, we create an array of size (target+1), this is because obviosly only the numbers smaller then the target can be added to sumout the target. We will be looking into each index of this array and see if its posible to generate the target. For intialization we consider all the indexes to be false as we consider generating target using any number isnt possible. (Check video)
+    result[0] = true // We mark 0th index as true as generating 0 is always possible by not choosing any element and just using an empty array [].
+
+    // Check the video to understand But we basically take all the indexes of result and then start inserting true to all the index according to the condition shown below.
+    for(var i=0; i<=target; i += 1){
+        for(var j=0; j<numbers.length; j+=1){
+            if(i + numbers[j] <= target){ result[i + numbers[j]]=true }
+        }
+    }
+    // Returning the value of the index for which we were checking if the sum is possible
+    return result[target]
+}
+
+// console.log(can_sum_DP_tabulation(7, [5, 3, 4]))
