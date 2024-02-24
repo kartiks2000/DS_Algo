@@ -601,3 +601,35 @@ function how_sum(target, numbers){
 }
 
 // console.log(how_sum(7, [5, 3, 4]))
+
+
+
+// Best Sum - Tabulation DP
+// Watch the tutorial to understand
+// https://youtu.be/oBt53YbR9Kk?t=14847
+
+// m -> target, n -> length of array (numbers)
+// Time: O((m^2)*n) || Space: O(m*m)
+
+function best_sum(target, numbers){
+    var result = Array(target+1).fill(null) // Initially considering there is no way to build the target.
+    result[0] = [] // Initializing seed value on 0th index as 0 can be generated using no element or empty array.
+
+    // Check video of understanding But we follow a relatively similar algorithm but with different operations and approaches.
+    for(var i=0; i<=target; i++){
+        if(result[i]!=null){
+            for(var j=0; j<numbers.length; j++){
+                if(i+numbers[j]<=target){
+                    if(result[i+numbers[j]] == null){ result[i+numbers[j]] = [...result[i], numbers[j]] }
+                    else{
+                        var possible_combination = [...result[i], numbers[j] ]
+                        if(result[i+numbers[j]].length > possible_combination){ result[i+numbers[j]] = possible_combination }
+                    }
+                }
+            }
+        }
+    }
+    return result[target]
+}
+
+// console.log(best_sum(6, [2, 3, 4]))
